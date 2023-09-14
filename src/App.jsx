@@ -39,12 +39,14 @@ const App = () => {
   if (result.loading) {
     return <div>loading...</div>
   }
+
   const notify = (message) => {
     setErrorMessage(message)
     setTimeout(() => {
       setErrorMessage(null)
     }, 10000)
   }
+
   const logout = () => {
     setToken(null)
     localStorage.clear()
@@ -64,16 +66,19 @@ const App = () => {
   }
   console.log(result.data.allPersons)
 
-  /* Test */
-  const uniqByName = (a) => {
-    let seen = new Set() // Initialize an empty Set to keep track of seen names
-    return a.filter((item) => {
-      let k = item.name // Get the 'name' property from each item
-      return seen.has(k) ? false : seen.add(k) // Check if the name is already seen; if not, add it to the Set and keep the item
-    })
+  function fetchData(callback) {
+    setTimeout(() => {
+      callback('Data fetched')
+    }, 1000)
   }
 
-  let arr = ['Kohn', 'John', 'Kohn', 'Nike']
+  fetchData((result) => {
+    console.log(result)
+  })
+
+
+
+
   return (
     <div>
       <Notify errorMessage={errorMessage} />
