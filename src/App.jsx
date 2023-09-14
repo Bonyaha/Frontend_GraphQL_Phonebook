@@ -64,8 +64,16 @@ const App = () => {
   }
   console.log(result.data.allPersons)
 
+  /* Test */
+  const uniqByName = (a) => {
+    let seen = new Set() // Initialize an empty Set to keep track of seen names
+    return a.filter((item) => {
+      let k = item.name // Get the 'name' property from each item
+      return seen.has(k) ? false : seen.add(k) // Check if the name is already seen; if not, add it to the Set and keep the item
+    })
+  }
 
-
+  let arr = ['Kohn', 'John', 'Kohn', 'Nike']
   return (
     <div>
       <Notify errorMessage={errorMessage} />
