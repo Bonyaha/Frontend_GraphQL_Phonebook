@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { gql, useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { CREATE_PERSON } from '../queries'
 import { ALL_PERSONS } from '../queries'
-import { useApolloClient } from '@apollo/client'
+import { updateCache } from '../App'
 
 const PersonForm = ({ setError }) => {
 	const [name, setName] = useState('')
@@ -10,32 +10,17 @@ const PersonForm = ({ setError }) => {
 	const [street, setStreet] = useState('')
 	const [city, setCity] = useState('')
 
-	const client = useApolloClient()
-	const result = client.readQuery({ query: ALL_PERSONS })
-
-	/* if (result) {
-		// The query result is in the 'result' variable
-		console.log(result)
-	} else {
-		console.log("Query not found in cache.")
-	} */
 
 	const [createPerson] = useMutation(CREATE_PERSON, {
 		onError: (error) => {
 			const messages = error.graphQLErrors[0].message
 			setError(messages)
 		},
-
-		/* update: (cache, response) => {
-			console.log(cache)
-			cache.updateQuery({ query: ALL_PERSONS }, ({ allPersons }) => {
-				console.log(allPersons)
-				return {
-					allPersons: allPersons.concat(response.data.addPerson),
-				}
-			})
-		}, */
+		update: (cache, response) => {
+			updateCache(cache, { query: ALL_PERSONS }, response.data.addPerson)
+		}
 	})
+
 
 
 	const submit = (event) => {
