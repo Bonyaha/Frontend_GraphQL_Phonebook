@@ -5,7 +5,7 @@ import PersonForm from './components/PersonForm'
 import { ALL_PERSONS, PERSON_ADDED } from './queries'
 import PhoneForm from './components/PhoneForm'
 import LoginForm from './components/LoginForm'
-import { useMutation, useSubscription } from '@apollo/client'
+import { useSubscription } from '@apollo/client'
 
 const Notify = ({ errorMessage }) => {
   if (!errorMessage) { return null }
@@ -42,10 +42,10 @@ const App = () => {
       notify(`${addedPerson.name} added`)
 
       /* client.cache.updateQuery({ query: ALL_PERSONS }, ({ allPersons }) => {
-        return {
-          allPersons: allPersons.concat(addedPerson),
-        }
-      }) */
+      return {
+           allPersons: allPersons.concat(addedPerson),
+         }
+       }) */
       updateCache(client.cache, { query: ALL_PERSONS }, addedPerson)
     }
   })
