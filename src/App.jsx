@@ -1,3 +1,5 @@
+/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable react/prop-types */
 import { useState } from 'react'
 import { useQuery, useApolloClient } from '@apollo/client'
 import Persons from './components/Persons'
